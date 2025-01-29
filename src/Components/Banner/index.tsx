@@ -1,5 +1,5 @@
-import React, { useRef, useState } from "react";
-import PropTypes from "prop-types";
+import React, { useRef, useState, useEffect } from "react";
+import PropTypes, { number } from "prop-types";
 import "./index.css";
 import ImgContainer from "./ImgContainer";
 import SwitchArrow from "./SwitchArrow";
@@ -13,18 +13,12 @@ interface BannerProps {
 	duration: number;
 }
 
-
 const Banner = (props: BannerProps) => {
 
 	const [currentIndex, setCurrentIndex] = useState<number>(0);
 
+
     const imgContainerRef = useRef<{ switchToImgIndex: (index: number) => void }>(null);
-
-    const style = {
-        width: props.width,
-        height: props.height,
-
-    };
 
 	const handleSwitch = (index: number) => {
         if (imgContainerRef.current) {
@@ -51,9 +45,35 @@ const Banner = (props: BannerProps) => {
 		handleSwitch(current);
 	}
 
+	let autoSwithTimer:number|undefined = undefined;
+	const autoSwith = () => {
+		clearInterval(autoSwithTimer);
 
+		autoSwithTimer = setInterval(() => {
+			let current = currentIndex;
+			current = (current + 1) % props.imgSrcs.length;
+			handleSwitch(current);
 
-	return (<div className="banner-container" style={style}>
+		}, props.autoDuration);
+	};
+
+	useEffect(() => {
+		// This code will run once after the component mounts
+		autoSwith();
+
+		// Cleanup function if needed
+		return () => {
+			clearInterval(autoSwithTimer);
+		};
+	}, [currentIndex, props.autoDuration]); // Add currentIndex and props.autoDuration to the dependency array
+
+    const style = {
+        width: props.width,
+        height: props.height,
+
+    };
+
+	return (<div className="banner-container" style={style} onMouseEnter={()=>clearInterval(autoSwithTimer)} onMouseLeave={()=>autoSwith()}>
 		<ImgContainer 
 			ref={imgContainerRef}
 			imgScrcs={props.imgSrcs} 
