@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import "./index.css";
 import ImgContainer from "./ImgContainer";
 import SwitchArrow from "./SwitchArrow";
+import SwitchDot from "./SwitchDot";
 
 interface BannerProps {
 	width: number;
@@ -29,9 +30,11 @@ const Banner = (props: BannerProps) => {
         if (imgContainerRef.current) {
             imgContainerRef.current.switchToImgIndex(index);
         }
+		setCurrentIndex(index);
+
     };
 
-	const handleChange = (dirction:'left'|'right') =>{
+	const handleArrowChange = (dirction:'left'|'right') =>{
 		let current  = currentIndex;
 
 		switch(dirction){
@@ -45,9 +48,10 @@ const Banner = (props: BannerProps) => {
 				break;
 		}
 
-		setCurrentIndex(current);
 		handleSwitch(current);
 	}
+
+
 
 	return (<div className="banner-container" style={style}>
 		<ImgContainer 
@@ -57,9 +61,8 @@ const Banner = (props: BannerProps) => {
 			imgHeight={props.height}
 			duration={props.duration}
 		/>
-		<SwitchArrow onChange={handleChange}/>
-		<button onClick={()=>{handleSwitch(3)}}>To the 3rd img</button>
-		<button onClick={()=>{handleSwitch(2)}}>To the 2nd img</button>
+		<SwitchArrow onChange={handleArrowChange}/>
+		<SwitchDot currentIndex={currentIndex} total={props.imgSrcs.length} onChange={handleSwitch}/>
 
 	</div>);
 };
