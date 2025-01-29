@@ -1,3 +1,11 @@
+.arrow{
+    display: none;
+}
+
+.banner-container:hover .arrow{
+    display: block;
+}
+
 .arrow span{
     position: absolute;
     color: #fff;
