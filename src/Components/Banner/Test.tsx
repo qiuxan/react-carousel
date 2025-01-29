@@ -13,7 +13,7 @@ const defaultProps = {
   height: 280,
   imgSrcs: [img1, img2, img3, img4, img5],
   autoDuration: 3000,
-  duration: 2000
+  duration: 500
 };
 
 const Test = () => {

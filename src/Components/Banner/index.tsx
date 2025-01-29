@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import PropTypes from "prop-types";
 import "./index.css";
 import ImgContainer from "./ImgContainer";
@@ -14,6 +14,9 @@ interface BannerProps {
 
 
 const Banner = (props: BannerProps) => {
+
+	const [currentIndex, setCurrentIndex] = useState<number>(0);
+
     const imgContainerRef = useRef<{ switchToImgIndex: (index: number) => void }>(null);
 
     const style = {
@@ -28,6 +31,24 @@ const Banner = (props: BannerProps) => {
         }
     };
 
+	const handleChange = (dirction:'left'|'right') =>{
+		let current  = currentIndex;
+
+		switch(dirction){
+			case "left":
+				current--;
+				if(current <0) current = props.imgSrcs.length - 1;
+				break;
+			case "right":
+				current++;
+				if(current> props.imgSrcs.length-1) current = 0;
+				break;
+		}
+
+		setCurrentIndex(current);
+		handleSwitch(current);
+	}
+
 	return (<div className="banner-container" style={style}>
 		<ImgContainer 
 			ref={imgContainerRef}
@@ -36,7 +57,7 @@ const Banner = (props: BannerProps) => {
 			imgHeight={props.height}
 			duration={props.duration}
 		/>
-		<SwitchArrow/>
+		<SwitchArrow onChange={handleChange}/>
 		<button onClick={()=>{handleSwitch(3)}}>To the 3rd img</button>
 		<button onClick={()=>{handleSwitch(2)}}>To the 2nd img</button>
 

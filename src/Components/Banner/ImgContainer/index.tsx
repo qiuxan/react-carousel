@@ -13,7 +13,6 @@ let timer:number|undefined = undefined;
 
 
 const ImgContainer = forwardRef(({ imgScrcs = [], imgWidth = 521, imgHeight = 281, duration = 2001 }: ImgContainerProps, ref) => {
-  console.log({ imgScrcs, imgWidth, imgHeight, duration });
 
   const divRef = useRef<HTMLDivElement>(null);
 
@@ -59,7 +58,6 @@ const ImgContainer = forwardRef(({ imgScrcs = [], imgWidth = 521, imgHeight = 28
 
     timer = setInterval(() => {
       currentTimeNumber++;
-      console.log({currentTimeNumber, times});
 
       currentLeftMargin += distancePerTick;
 
@@ -69,13 +67,6 @@ const ImgContainer = forwardRef(({ imgScrcs = [], imgWidth = 521, imgHeight = 28
         clearInterval(timer);
       }
     }, tick);
-
-
-
-    
-
-    console.log({divRef, index, targetLeftMargin, currentLeftMargin});
-
 
   };
 
