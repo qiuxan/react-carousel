@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import PropTypes from "prop-types";
 import "./index.css";
 import ImgContainer from "./ImgContainer";
+import SwitchArrow from "./SwitchArrow";
 
 interface BannerProps {
 	width: number;
@@ -35,6 +36,7 @@ const Banner = (props: BannerProps) => {
 			imgHeight={props.height}
 			duration={props.duration}
 		/>
+		<SwitchArrow/>
 		<button onClick={()=>{handleSwitch(3)}}>To the 3rd img</button>
 		<button onClick={()=>{handleSwitch(2)}}>To the 2nd img</button>
 
